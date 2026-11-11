@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG BASEIMAGE
+ARG BASEIMAGE=alpine:3.22
 FROM $BASEIMAGE
 ADD sample-node-liveness-detector /sample-node-liveness-detector
+USER 65532:65532
 ENTRYPOINT ["/sample-node-liveness-detector"]

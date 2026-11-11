@@ -17,6 +17,15 @@ spec:
     spec:
       serviceAccountName: sample-node-liveness-detector
       priorityClassName: system-cluster-critical
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: sample-node-liveness-detector
+                topologyKey: kubernetes.io/hostname
       tolerations:
         - key: node-role.kubernetes.io/control-plane
           operator: Exists
@@ -39,6 +48,8 @@ spec:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             runAsNonRoot: true
+            runAsUser: 65532
+            runAsGroup: 65532
             capabilities:
               drop: ["ALL"]
           resources:
